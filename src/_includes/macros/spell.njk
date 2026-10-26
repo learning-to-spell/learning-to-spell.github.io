@@ -1,0 +1,33 @@
+{% macro spell(text) -%}
+{%- set params = [
+  { name: "rho",      label: "Coverage ratio",  min: 0.3, max: 1.5, step: 0.1, value: 0.7 },
+  { name: "vertices", label: "Vertices",        min: 3,   max: 10,  step: 1,   value: 6   },
+  { name: "link",     label: "Link length",     min: 0.3, max: 1.0, step: 0.1, value: 0.7 },
+  { name: "limit",    label: "Joint limit (°)", min: 20,  max: 80,  step: 10,  value: 70  },
+  { name: "coverage", label: "Coverage weight", min: 0,   max: 2,   step: 0.2, value: 1   },
+  { name: "overhang", label: "Overhang weight", min: 0,   max: 1,   step: 0.1, value: 0.1 }
+] -%}
+<figure class="viz spell" data-spell>
+  <canvas class="spell__canvas" role="img"></canvas>
+  <form class="spell__form">
+    <div class="spell__bar">
+      <input name="text" type="text" value="{{ text }}" autocomplete="off" spellcheck="false" maxlength="40" />
+      <button type="submit">Fit</button>
+      <output class="spell__status"></output>
+    </div>
+    <details class="spell__params">
+      <summary>Parameters</summary>
+      <div class="spell__grid">
+        {%- for p in params %}
+        <label class="spell__param">
+          <span>{{ p.label }}</span>
+          <input type="range" name="{{ p.name }}" min="{{ p.min }}" max="{{ p.max }}" step="{{ p.step }}" value="{{ p.value }}" />
+          <output>{{ p.value }}</output>
+        </label>
+        {%- endfor %}
+      </div>
+    </details>
+  </form>
+  <script type="module" src="spell/index.js"></script>
+</figure>
+{%- endmacro %}

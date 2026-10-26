@@ -1,0 +1,95 @@
+---
+layout: base.njk
+pagination:
+  data: presets
+  size: 1
+  alias: preset
+permalink: "{{ preset.slug or 'index' }}.html"
+---
+{% import "macros/video.njk" as v %}
+{% import "macros/spell.njk" as s %}
+
+<header class="page-header">
+  <h1 class="page-header__title">
+    learning to spell<small>(with a family of snakes)</small>
+  </h1>
+  <figure class="viz viz--video">
+    {{ v.clip(preset.video) }}
+  </figure>
+</header>
+
+<section class="content-section">
+  <h2 class="content-section__title">What?</h2>
+  <p>
+    A swarm of snake robots spell out an input string, powered by reinforcement learning.
+  </p>
+</section>
+
+<section class="content-section">
+  <h2 class="content-section__title">How?</h2>
+
+  <p>
+    A state-based RL policy controls each snake robot individually. The policy is trained to match a randomly selected pose defined by six target keypoints. The observation space consists of the current state and the target keypoint locations.
+  </p>
+  <figure class="viz viz--video">
+    {{ v.clip("static/videos/training.mp4") }}
+  </figure>
+
+  <p>
+    To generate target keypoints for a letter, a least squares optimization problem is solved. Given a set of robots spawned evenly along a letter, the solver finds the base locations and joint angles that best cover the letter,
+    \[
+    \begin{aligned}
+    \min_{Q} \;\; & \frac{1}{N} \sum_{i=1}^{N} d\big(p_i, V(Q)\big)^2 \;+\; \frac{\lambda}{M} \sum_{j=1}^{M}  d\big(v_j, P\big)^2 \\
+    \text{s.t.} \;\; & |\theta_{k,i}| \le \theta_{\max} \; \forall \; k, i
+    \end{aligned}
+    \]
+    where,
+  </p>
+  <ul>
+    <li>\(Q = (q_1, \dots, q_K)\) is the configuration of all \(K\) robots with \(q_k = (x_k, y_k, \varphi_k, \theta_{k,1}, \dots, \theta_{k,n-2})\)</li>
+    <li>\(P = \{p_1, \dots, p_N\}\) is the set of sampled points on the letter</li>
+    <li>\(V(Q) = \{v_1, \dots, v_M\}\) is the set of all vertices of robots in configuration \(Q\)</li>
+    <li>\(d(x, S) = \min_{s \in S} \lVert x - s \rVert\) is the distance from a point \(x\) to the nearest point in a set \(S\)</li>
+  </ul>
+
+  {{ s.spell(preset.demo) }}
+
+  <p>
+    Finally, the animation is exported to Blender for rendering freedom.
+  </p>
+  <figure class="viz viz--image">
+    <img src="static/images/blender.png" alt="Blender scene of robots" />
+  </figure>
+</section>
+
+<section class="content-section">
+  <h2 class="content-section__title">Why?</h2>
+  <p>
+    I think what {{ preset.sentence }} doing is awesome and I would love to be a part of the team. I figured this demo would be a fun way to show that I have the skills and passion to contribute to your mission.
+  </p>
+</section>
+
+<section class="content-section">
+  <h2 class="content-section__title">Who?</h2>
+  <p>
+    My name is Henry Noyes. I recently graduated with my Master's degree from Northeastern, where <a href="https://henrynoyes.info">I spent the last four years doing robotics research</a>—mostly centered on <a href="https://advanced.onlinelibrary.wiley.com/doi/10.1002/aisy.202500352">snake robot autonomy</a>. I have a background in simulation and controls, but I have touched most avenues of robotics. In my free time, <a href="https://henrynoyes.space">I like to build things</a>. You can view my resume <a href="https://henrynoyes.info/henry-noyes-resume.pdf">here</a>. You can contact me at <a href="">noyes.he@northeastern.edu</a> or 845-905-6671. If this has sparked any intrigue, I would be happy to chat.
+  </p>
+</section>
+
+<section class="content-section">
+  <h2 class="content-section__title">more RL projects</h2>
+  <div class="vid-pair">
+    <figure class="viz">
+      {{ v.clip("static/videos/nonprehensile.mp4") }}
+      <figcaption>Nonprehensile box reorientation<br/><a href="nonprehensile.pdf">paper</a></figcaption>
+    </figure>
+    <figure class="viz">
+      {{ v.clip("static/videos/climbing.mp4") }}
+      <figcaption>Contact-aware step climbing<br/><a href="https://openreview.net/pdf?id=5kH4S2iUTh">paper</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Henry Noyes 2026</p>
+</footer>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ site.title }}</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="katex/katex.min.css" />
+  <link rel="icon" href="static/icon.svg" type="image/svg+xml" />
+  <meta property="og:title" content="{{ site.title }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ site.url }}/{{ preset.slug }}" />
+  <meta property="og:image" content="{{ site.url }}/static/images/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+  {{ content | safe }}
+
+  <button class="media-toggle" type="button" aria-label="Pause all media">
+    <span class="media-toggle__icon" aria-hidden="true"></span>
+  </button>
+
+  <script src="main.js"></script>
+</body>
+</html>

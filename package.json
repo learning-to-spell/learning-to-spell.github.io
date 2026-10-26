@@ -1,0 +1,17 @@
+{
+  "name": "learning-to-spell",
+  "version": "1.0.0",
+  "description": "Teaching snakes how to spell.",
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve --port=3000",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy-img": "^6.0.0"
+  },
+  "dependencies": {
+    "katex": "^0.19.0"
+  }
+}
